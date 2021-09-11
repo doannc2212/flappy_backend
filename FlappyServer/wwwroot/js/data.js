@@ -14,6 +14,7 @@ connection.on("UserDead", function (user) {
     li.textContent = `${user} up`;
 });
 
+
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {

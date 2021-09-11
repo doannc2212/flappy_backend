@@ -15,13 +15,13 @@ namespace FlappyServer.Hubs
         public async Task StartToPlay(string username)
         {
             gameManager.addUser(username, Context.ConnectionId);
-            await Clients.All.SendAsync("Notify", username);
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("newUser", username);
         }
 
         [HubMethodName("UpAction")]
         public async Task UpActionFromClient()
         {
-            await Clients.All.SendAsync("UserUp", gameManager.getUserById(Context.ConnectionId).Name);
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("UserUp", gameManager.getUserById(Context.ConnectionId).Name);
         }
         [HubMethodName("DeadStatus")]
         public async Task deadUser()
@@ -32,7 +32,7 @@ namespace FlappyServer.Hubs
         public async Task ExitGame()
         {
             gameManager.removeUser(Context.ConnectionId);
-            await Clients.All.SendAsync("Notify", gameManager.getUserById(Context.ConnectionId).Name);
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("Notify", gameManager.getUserById(Context.ConnectionId).Name);
         }
         [HubMethodName("CallMap")]
         public async Task MapProcess()
@@ -49,7 +49,7 @@ namespace FlappyServer.Hubs
         {
             gameManager.removeUser(Context.ConnectionId);
             var user = gameManager.getUserById(Context.ConnectionId);
-            await Clients.All.SendAsync("Notify", user.Name, user.Score);
+            await Clients.All.SendAsync("UserExit", user.Name, user.Score);
             await base.OnDisconnectedAsync(exception);
         }
     }
