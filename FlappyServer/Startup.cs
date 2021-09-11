@@ -55,7 +55,7 @@ namespace FlappyServer
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
-
+            //add cors
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

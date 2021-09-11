@@ -10,6 +10,7 @@ namespace FlappyServer.Hubs
     public class dataHub : Hub
     {
         private static GameManagement gameManager = new GameManagement();
+
         [HubMethodName("startGame")]
         public async Task StartToPlay(string username)
         {
@@ -39,7 +40,7 @@ namespace FlappyServer.Hubs
             var map = gameManager.getMapForUser(Context.ConnectionId);
             await Clients.Caller.SendAsync("UpdateMap", map.Top, map.Bottom);
         }
-        [HubMethodName("Pass")]
+        [HubMethodName("addScore")]
         public async Task ScoreProcess()
         {
             gameManager.addScoreForUser(Context.ConnectionId);

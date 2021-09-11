@@ -48,6 +48,7 @@ namespace FlappyServer
 
         public void addScoreForUser(string id)
         {
+            if(listOfUser[id] != null)
             listOfUser[id].Score += 1;
         }
     }
