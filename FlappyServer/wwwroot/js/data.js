@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/dataHub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/dataHub").build();
 
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
