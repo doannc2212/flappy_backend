@@ -26,7 +26,7 @@ namespace FlappyServer.Hubs
         [HubMethodName("DeadStatus")]
         public async Task deadUser()
         {
-            await Clients.All.SendAsync("UserDead", gameManager.getUserById(Context.ConnectionId).Name);
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("UserDead", gameManager.getUserById(Context.ConnectionId).Name);
         }
         [HubMethodName("ExitGame")]
         public async Task ExitGame()
