@@ -25,6 +25,13 @@ namespace FlappyServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyMethod()
+                        .AllowAnyHeader().AllowCredentials().SetIsOriginAllowed(_ => true));
+            });
             services.AddRazorPages();
             services.AddSignalR();
         }
@@ -47,14 +54,14 @@ namespace FlappyServer
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
                 endpoints.MapHub<dataHub>("/dataHub");
             });
+
         }
     }
 }
